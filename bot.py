@@ -1,7 +1,8 @@
 import telebot
 import markups as m
-from Scripts import RndImage as RI
 from Task import Task
+from Scripts import RndImage as RI
+from Scripts import SQLite as sql
 
 token = open("token", 'r').read()
 bot = telebot.TeleBot(token)
@@ -12,7 +13,8 @@ def start_handler(message):
     if not task.isRunning:
         chat_id = message.chat.id
         bot.send_message(chat_id, 'Привет')
-        msg = bot.send_message(chat_id, 'Выбери команду', reply_markup=m.source_markup)
+        msg = bot.send_message(chat_id, 'Выбери команду', 
+        reply_markup=m.source_markup)
         bot.register_next_step_handler(msg, askAction)
         task.isRunning = True
 
@@ -27,5 +29,10 @@ def askAction(message):
         img = open(RI.GetRndImage(), 'rb')
         msg = bot.send_photo(chat_id, photo=img)
         bot.register_next_step_handler(msg, askAction)
+    elif text in task.names[2]:
+        result_sql = sql.foo()
+        msg = bot.send_message(chat_id, "```\r\n" + result_sql + "```", parse_mode="Markdown")
+        bot.register_next_step_handler(msg, askAction)
+        
 
 bot.polling()
