@@ -3,7 +3,6 @@ import markups as m
 from Scripts import RndImage as RI
 from Task import Task
 
-#token = "5426075448:AAHprfWnP7W_7A1-BJXzEv0s6m0nZz_p-JY"
 token = open("token", 'r').read()
 bot = telebot.TeleBot(token)
 task = Task()
