@@ -14,3 +14,11 @@ source_markup_btn5 = types.KeyboardButton('Выход')
 source_markup.add(source_markup_btn1,source_markup_btn2,
 source_markup_btn3,source_markup_btn4,
 source_markup_btn5)
+
+homework_markups = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+list_subjects = sql.SelectMore("select * from subject")
+for item in list_subjects:
+    homework_markups.add(types.KeyboardButton(item[1]))
+
+def initNames():
+    return [item[1].lower() for item in list_subjects]
